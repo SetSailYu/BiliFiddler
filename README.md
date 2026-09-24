@@ -18,11 +18,11 @@
 ## 背景 / 为什么需要它
 
 B站 8.x 的核心 API（`api.bilibili.com`、`app.bilibili.com`、`grpc.biliapi.net` 等）由自带网络栈
-（魔改 OkHttp + 自带 BoringSSL）发起 HTTP/2 **直连**，从设计上无视 WiFi 代理，因此只配置 Fiddler 代理
-是抓不到的——证书修得再好，流量根本没进 Fiddler。
+（魔改 OkHttp + 自带 BoringSSL）发起 HTTP/2 **直连**，从设计上无视 WiFi 代理——因此只配代理、装证书
+都抓不到：流量压根没经过 Fiddler。
 
-本工具在内核层（iptables）把 B站 uid 的出站 443/80 流量 REDIRECT 到本机一个极小的 SNI 中继，中继解析
-TLS ClientHello 的 SNI 后，以标准 CONNECT 协议转发给 PC 端 Fiddler，Fiddler 正常 MITM 解密。
+本工具下沉到内核层（iptables），把 B站 uid 的出站 443/80 流量 REDIRECT 到本机一个 13KB 纯 C 的 SNI
+中继；中继解析 ClientHello 的 SNI 后，以标准 `CONNECT` 协议转发给 PC 端 Fiddler，正常 MITM 解密。
 
 ## 工作原理
 
