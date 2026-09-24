@@ -1,0 +1,6 @@
+id=zzz_bilifiddler
+name=BiliFiddler Capture Redirect
+version=v1.0
+versionCode=1
+author=setsail
+description=Boot-restore for BiliFiddler: on boot, if capture was enabled, restart the SNI relay and iptables redirect so Bilibili direct traffic flows to PC Fiddler.
